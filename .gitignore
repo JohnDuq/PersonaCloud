@@ -1,1 +1,3 @@
-*/target/*
+eureka-server/target/*
+persona-consumer/target/*
+persona-producer/target/*
