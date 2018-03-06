@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.client.RestClientException;
 
 @SpringBootApplication
-public class ExamplePersonaConsumerApplication {
+public class PersonaConsumerBootApp {
 
 	public static void main(String[] args) throws RestClientException, IOException {
-		SpringApplication.run(ExamplePersonaConsumerApplication.class, args);
+		SpringApplication.run(PersonaConsumerBootApp.class, args);
 	}
 
 }

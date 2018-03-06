@@ -3,6 +3,9 @@ package com.example.persona.consumer.controllers;
 import java.io.IOException;
 //import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.client.ServiceInstance;
 //import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -26,7 +29,7 @@ public class ConsumerControllerClient {
 	@RequestMapping(value = CONSULTAR_PERSONAS, method = RequestMethod.GET)
 	public void consultarPersonas() throws RestClientException, IOException {
 
-		String baseUrl = obtenerUrlExplicita();
+		String baseUrl = obtenerUrlRegistradaEurekaBalanceado();
 		baseUrl += "/" + CONSULTAR_PERSONAS;
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = null;
@@ -41,10 +44,10 @@ public class ConsumerControllerClient {
 	/*
 	 * METODO PARA OBTENER URL DIRECTA
 	 */
-	public String obtenerUrlExplicita() {
-		String baseUrl = "http://localhost:8080";
-		return baseUrl;
-	}
+	// public String obtenerUrlExplicita() {
+	// String baseUrl = "http://localhost:8080";
+	// return baseUrl;
+	// }
 
 	/*
 	 * METODO PARA OBTENER MICROSERVICIO REGISTRADO
@@ -63,15 +66,15 @@ public class ConsumerControllerClient {
 	/*
 	 * METODO PARA OBTENER MICROSERVICIO BALANCEADO
 	 */
-	// @Autowired
-	// private LoadBalancerClient loadBalancer;
-	// public String obtenerUrlRegistradaEurekaBalanceado() {
-	// ServiceInstance serviceInstance =
-	// loadBalancer.choose("persona-producer");
-	// System.out.println(serviceInstance.getUri());
-	// String baseUrl = serviceInstance.getUri().toString();
-	// return baseUrl;
-	// }
+	@Autowired
+	private LoadBalancerClient loadBalancer;
+
+	public String obtenerUrlRegistradaEurekaBalanceado() {
+		ServiceInstance serviceInstance = loadBalancer.choose("persona-producer");
+		System.out.println(serviceInstance.getUri());
+		String baseUrl = serviceInstance.getUri().toString();
+		return baseUrl;
+	}
 
 	private static HttpEntity<?> getHeaders() throws IOException {
 		HttpHeaders headers = new HttpHeaders();
