@@ -41,6 +41,9 @@ public class RestService {
 	@RequestMapping(value = CONSULTAR_PERSONAS_PAGINADAS, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
 	@HystrixCommand(fallbackMethod = "consultarPersonasFB")
 	public PersonConsult consultarPersonasPaginadas(PersonConsult personConsult) {
+		
+		
+		
 		personConsult.setlPersons(personRepository.findAll(personConsult.getPageable()));
 		return personConsult;
 	}

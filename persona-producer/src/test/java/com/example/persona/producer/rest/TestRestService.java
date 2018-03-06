@@ -59,9 +59,9 @@ public class TestRestService extends ExamplePersonaProducerApplicationTests {
 
 	@Test
 	public void testConsultarPersonasPaginadas() throws Exception {
-		Pageable pageable = new PageRequest(pagina, cantidadRegistros);
 		PersonConsult personConsult = new PersonConsult();
-		personConsult.setPageable(pageable);
+		personConsult.setNumeroPagina(pagina);
+		personConsult.setTamanoPagina(cantidadRegistros);
 		PersonConsult reponse = restService.consultarPersonasPaginadas(personConsult);
 		assertTrue(!reponse.getlPersons().isEmpty());
 		assertTrue(reponse.getlPersons().size() == cantidadRegistros);
