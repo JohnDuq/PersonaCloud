@@ -24,13 +24,14 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class ConsumerControllerClient {
 
+	public static final String PERSONA = "PERSONA";
 	public static final String CONSULTAR_PERSONAS = "CONSULTAR_PERSONAS";
 
 	@RequestMapping(value = CONSULTAR_PERSONAS, method = RequestMethod.GET)
 	public void consultarPersonas() throws RestClientException, IOException {
 
 		String baseUrl = obtenerUrlRegistradaEurekaBalanceado();
-		baseUrl += "/" + CONSULTAR_PERSONAS;
+		baseUrl += "/" + PERSONA + "/" + CONSULTAR_PERSONAS;
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = null;
 		try {

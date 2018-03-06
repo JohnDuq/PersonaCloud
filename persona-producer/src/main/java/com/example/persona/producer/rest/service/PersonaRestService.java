@@ -19,6 +19,7 @@ import com.example.persona.producer.rest.TypeConsumerProducer;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
+@RequestMapping(value = PersonProducerUrl.PERSONA)
 public class PersonaRestService {
 
 	@Autowired
