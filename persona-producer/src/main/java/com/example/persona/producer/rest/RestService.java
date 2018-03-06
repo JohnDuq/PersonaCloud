@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,16 +40,6 @@ public class RestService {
 		return personConsult;
 	}
 
-	@RequestMapping(value = CONSULTAR_PERSONAS_PAGINADAS, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
-	@HystrixCommand(fallbackMethod = "consultarPersonasFB")
-	public PersonConsult consultarPersonasPaginadas(PersonConsult personConsult) {
-		
-		
-		
-		personConsult.setlPersons(personRepository.findAll(personConsult.getPageable()));
-		return personConsult;
-	}
-
 	public PersonConsult consultarPersonasFB() {
 		PersonConsult personConsult = new PersonConsult();
 		List<Person> lPersons = new ArrayList<>();
@@ -55,6 +47,12 @@ public class RestService {
 		person.setId(144);
 		person.setName("fallbackMethod");
 		personConsult.setlPersons(lPersons);
+		return personConsult;
+	}
+
+	@RequestMapping(value = CONSULTAR_PERSONAS_PAGINADAS, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
+	public PersonConsult consultarPersonasPaginadas(@RequestBody PersonConsult personConsult) {
+		personConsult.setlPersons(personRepository.findAll(personConsult.getPageableConstructor().construirPageable()));
 		return personConsult;
 	}
 

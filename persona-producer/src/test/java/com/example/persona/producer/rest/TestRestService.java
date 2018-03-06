@@ -14,15 +14,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.example.persona.producer.ExamplePersonaProducerApplicationTests;
+import com.example.persona.producer.PersonaProducerBootAppTests;
 import com.example.persona.producer.dto.PersonConsult;
 import com.example.persona.producer.dto.PersonaRequest;
 import com.example.persona.producer.dto.PersonaResponse;
 import com.example.persona.producer.entity.Person;
 import com.example.persona.producer.repository.PersonRepository;
 import com.example.persona.producer.rest.factory.PersonRepositoryFactory;
+import com.example.persona.producer.util.PageableConstructor;
 
-public class TestRestService extends ExamplePersonaProducerApplicationTests {
+public class TestRestService extends PersonaProducerBootAppTests {
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -55,16 +56,6 @@ public class TestRestService extends ExamplePersonaProducerApplicationTests {
 		assertTrue(!reponse.getlPersons().isEmpty());
 		assertTrue(reponse.getlPersons().get(0).getId().equals(PersonRepositoryFactory.ID_TEST));
 		assertTrue(reponse.getlPersons().get(0).getName().equals(PersonRepositoryFactory.NAME_TEST));
-	}
-
-	@Test
-	public void testConsultarPersonasPaginadas() throws Exception {
-		PersonConsult personConsult = new PersonConsult();
-		personConsult.setNumeroPagina(pagina);
-		personConsult.setTamanoPagina(cantidadRegistros);
-		PersonConsult reponse = restService.consultarPersonasPaginadas(personConsult);
-		assertTrue(!reponse.getlPersons().isEmpty());
-		assertTrue(reponse.getlPersons().size() == cantidadRegistros);
 	}
 
 	@Test

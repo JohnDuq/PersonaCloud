@@ -7,13 +7,13 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 
 @SpringBootApplication
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @EnableCircuitBreaker
 @EnableHystrixDashboard
-public class ExamplePersonaProducerApplication {
+public class PersonaProducerBootApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ExamplePersonaProducerApplication.class, args);
+		SpringApplication.run(PersonaProducerBootApp.class, args);
 	}
 	
 }
