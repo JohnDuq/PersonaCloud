@@ -1,11 +1,9 @@
-package com.example.persona.producer.rest;
+package com.example.persona.producer.rest.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,23 +14,17 @@ import com.example.persona.producer.dto.PersonaRequest;
 import com.example.persona.producer.dto.PersonaResponse;
 import com.example.persona.producer.entity.Person;
 import com.example.persona.producer.repository.PersonRepository;
+import com.example.persona.producer.rest.PersonProducerUrl;
+import com.example.persona.producer.rest.TypeConsumerProducer;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
-public class RestService {
-
-	public static final String CONSULTAR_PERSONAS = "CONSULTAR_PERSONAS";
-	public static final String CONSULTAR_PERSONAS_PAGINADAS = "CONSULTAR_PERSONAS_PAGINADAS";
-	public static final String GUARDAR_PERSONA = "GUARDAR_PERSONA";
-	public static final String ACTUALIZAR_PERSONA = "ACTUALIZAR_PERSONA";
-	public static final String ELIMINAR_PERSONA = "ELIMINAR_PERSONA";
+public class PersonaRestService {
 
 	@Autowired
 	private PersonRepository personRepository;
 
-	public static final String APPLICATION_JSON = "application/json";
-
-	@RequestMapping(value = CONSULTAR_PERSONAS, method = RequestMethod.GET, produces = APPLICATION_JSON)
+	@RequestMapping(value = PersonProducerUrl.CONSULTAR_PERSONAS, method = RequestMethod.GET, produces = TypeConsumerProducer.APPLICATION_JSON)
 	@HystrixCommand(fallbackMethod = "consultarPersonasFB")
 	public PersonConsult consultarPersonas() {
 		PersonConsult personConsult = new PersonConsult();
@@ -50,13 +42,13 @@ public class RestService {
 		return personConsult;
 	}
 
-	@RequestMapping(value = CONSULTAR_PERSONAS_PAGINADAS, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
+	@RequestMapping(value = PersonProducerUrl.CONSULTAR_PERSONAS_PAGINADAS, method = RequestMethod.POST, consumes = TypeConsumerProducer.APPLICATION_JSON, produces = TypeConsumerProducer.APPLICATION_JSON)
 	public PersonConsult consultarPersonasPaginadas(@RequestBody PersonConsult personConsult) {
 		personConsult.setlPersons(personRepository.findAll(personConsult.getPageableConstructor().construirPageable()));
 		return personConsult;
 	}
 
-	@RequestMapping(value = GUARDAR_PERSONA, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
+	@RequestMapping(value = PersonProducerUrl.GUARDAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerProducer.APPLICATION_JSON, produces = TypeConsumerProducer.APPLICATION_JSON)
 	@HystrixCommand(fallbackMethod = "guardarPersonaFB")
 	public PersonaResponse guardarPersona(@RequestBody PersonaRequest guardadoPersonaRequest) {
 		PersonaResponse guardadoPersonaResponse = new PersonaResponse();
@@ -89,7 +81,7 @@ public class RestService {
 		return guardadoPersonaResponse;
 	}
 
-	@RequestMapping(value = ACTUALIZAR_PERSONA, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
+	@RequestMapping(value = PersonProducerUrl.ACTUALIZAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerProducer.APPLICATION_JSON, produces = TypeConsumerProducer.APPLICATION_JSON)
 	@HystrixCommand(fallbackMethod = "actualizarPersonaFB")
 	public PersonaResponse actualizarPersona(@RequestBody PersonaRequest actualizarPersonaRequest) {
 		PersonaResponse guardadoPersonaResponse = new PersonaResponse();
@@ -119,7 +111,7 @@ public class RestService {
 		return guardadoPersonaResponse;
 	}
 
-	@RequestMapping(value = ELIMINAR_PERSONA, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
+	@RequestMapping(value = PersonProducerUrl.ELIMINAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerProducer.APPLICATION_JSON, produces = TypeConsumerProducer.APPLICATION_JSON)
 	@HystrixCommand(fallbackMethod = "eliminarPersonaFB")
 	public PersonaResponse eliminarPersona(@RequestBody PersonaRequest eliminarPersonaRequest) {
 		PersonaResponse guardadoPersonaResponse = new PersonaResponse();

@@ -21,6 +21,7 @@ import com.example.persona.producer.dto.PersonaResponse;
 import com.example.persona.producer.entity.Person;
 import com.example.persona.producer.repository.PersonRepository;
 import com.example.persona.producer.rest.factory.PersonRepositoryFactory;
+import com.example.persona.producer.rest.service.PersonaRestService;
 import com.example.persona.producer.util.PageableConstructor;
 
 public class TestRestService extends PersonaProducerBootAppTests {
@@ -29,7 +30,7 @@ public class TestRestService extends PersonaProducerBootAppTests {
 	private WebApplicationContext webApplicationContext;
 
 	@InjectMocks
-	RestService restService;
+	PersonaRestService restService;
 
 	@Mock
 	PersonRepository personRepository;
