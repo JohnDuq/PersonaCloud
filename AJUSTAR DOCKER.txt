@@ -1,0 +1,42 @@
+https://www.youtube.com/watch?v=ymlWt1MqURY
+https://jayvilalta.com/blog/2016/04/28/installing-docker-toolbox-on-windows-with-hyper-v-installed/
+
+
+Ejecutar Docker Quickstart Terminal
+
+Al Iniciar Windows
+1. ingresar a la carpeta C:\Program Files\Docker Toolbox en la cual se instalo Docker
+2. Editar archivo start.sh
+3. reemplazar linea 60 "${DOCKER_MACHINE}" create -d virtualbox $PROXY_ENV "${VM}" 
+	por  "${DOCKER_MACHINE}" create -d virtualbox --virtualbox-no-vtx-check $PROXYENV "${VM}"
+
+Ejecutar Docker Quickstart Terminal
+	
+Cuando Docker solicite una IP
+1. en el buscar dor de windows, ingresar a "windows firewall" (control panel)
+2. entra a "Advanced Settings"
+3. en el menu (izquierdo) entrar a "Inbound rules"
+4. en el menu (derecho) seleccionar "New Rule"
+5. en la ventana emergente seleccionar "Custom" y "Next->"
+5. seleccionar "All programs" y "Next->"
+6. seleccionar "Next->"
+7.  Abrir consola (CMD) y ejecutar "ipconfig"
+		* copiar ipv4 asignada a virtual box Network #2 (192.168.99.1)
+	En el primer panel:
+		* seleccionar "These IP addresses"
+		* seleccionar "Add"
+		* Seleccionar "This IP address or subnet"
+		* ingresar ipv4 asignada a virtual box Network #2 copiada en paso anterior (192.168.99.1)
+		* seleccionar "This IP address range"
+		* ingresar en "From" la ip desde 0 (192.168.99.0)
+		* ingresar en "To" la ip hasta 100 (192.168.99.100)
+	seleccionar "Next->"
+8. seleccionar "Allow the connection" y "Next->"
+9. Chek solamente "Public" y "Next->"
+10. Ingresar el nombre "DockerIP" y "Finish"
+
+Ejecutar Docker Quickstart Terminal
+	
+
+
+

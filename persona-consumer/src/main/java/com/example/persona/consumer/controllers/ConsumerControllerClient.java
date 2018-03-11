@@ -2,19 +2,21 @@ package com.example.persona.consumer.controllers;
 
 import java.io.IOException;
 //import java.util.List;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.cloud.client.ServiceInstance;
-//import org.springframework.cloud.client.discovery.DiscoveryClient;
-//import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,10 +29,11 @@ public class ConsumerControllerClient {
 	public static final String PERSONA = "PERSONA";
 	public static final String CONSULTAR_PERSONAS = "CONSULTAR_PERSONAS";
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = CONSULTAR_PERSONAS, method = RequestMethod.GET)
 	public void consultarPersonas() throws RestClientException, IOException {
 
-		String baseUrl = obtenerUrlRegistradaEurekaBalanceado();
+		String baseUrl = obtenerUrlExplicita();
 		baseUrl += "/" + PERSONA + "/" + CONSULTAR_PERSONAS;
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = null;
@@ -45,24 +48,23 @@ public class ConsumerControllerClient {
 	/*
 	 * METODO PARA OBTENER URL DIRECTA
 	 */
-	// public String obtenerUrlExplicita() {
-	// String baseUrl = "http://localhost:8080";
-	// return baseUrl;
-	// }
+	public String obtenerUrlExplicita() {
+		String baseUrl = "http://localhost:8080";
+		return baseUrl;
+	}
 
 	/*
 	 * METODO PARA OBTENER MICROSERVICIO REGISTRADO
 	 */
-	// @Autowired
-	// private DiscoveryClient discoveryClient;
-	// public String obtenerUrlRegistradaEureka() {
-	// List<ServiceInstance> instances =
-	// discoveryClient.getInstances("persona-producer");
-	// ServiceInstance serviceInstance = instances.get(0);
-	// String baseUrl = serviceInstance.getUri().toString();
-	// return baseUrl;
-	// }
-	//
+	@Autowired
+	private DiscoveryClient discoveryClient;
+
+	public String obtenerUrlRegistradaEureka() {
+		List<ServiceInstance> instances = discoveryClient.getInstances("persona-producer");
+		ServiceInstance serviceInstance = instances.get(0);
+		String baseUrl = serviceInstance.getUri().toString();
+		return baseUrl;
+	}
 
 	/*
 	 * METODO PARA OBTENER MICROSERVICIO BALANCEADO

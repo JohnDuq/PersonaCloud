@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +26,7 @@ public class PersonaRestService {
 	@Autowired
 	private PersonRepository personRepository;
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = PersonProducerUrl.CONSULTAR_PERSONAS, method = RequestMethod.GET, produces = TypeConsumerProducer.APPLICATION_JSON)
 	@HystrixCommand(fallbackMethod = "consultarPersonasFB")
 	public PersonConsult consultarPersonas() {
@@ -49,6 +51,7 @@ public class PersonaRestService {
 		return personConsult;
 	}
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = PersonProducerUrl.GUARDAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerProducer.APPLICATION_JSON, produces = TypeConsumerProducer.APPLICATION_JSON)
 	@HystrixCommand(fallbackMethod = "guardarPersonaFB")
 	public PersonaResponse guardarPersona(@RequestBody PersonaRequest guardadoPersonaRequest) {
@@ -59,6 +62,8 @@ public class PersonaRestService {
 			person.setName(guardadoPersonaRequest.getName());
 			personRepository.save(person);
 
+			guardadoPersonaRequest.setId(person.getId());
+			guardadoPersonaResponse.setPersonaRequest(guardadoPersonaRequest);
 			guardadoPersonaResponse.setTransaccionExitosa(true);
 			guardadoPersonaResponse.setMessage("Guardado exitoso");
 

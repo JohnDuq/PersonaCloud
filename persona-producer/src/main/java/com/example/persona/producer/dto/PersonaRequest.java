@@ -3,6 +3,7 @@ package com.example.persona.producer.dto;
 public class PersonaRequest {
 
 	private Integer id;
+	private String name;
 
 	public Integer getId() {
 		return id;
@@ -20,6 +21,6 @@ public class PersonaRequest {
 		this.name = name;
 	}
 
-	private String name;
+	
 
 }
