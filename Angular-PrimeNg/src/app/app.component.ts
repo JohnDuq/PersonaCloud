@@ -67,9 +67,11 @@ export class AppComponent implements OnInit {
         const personas = [...this.personas];
         if (this.newPerson) {
             
-            this.personService.postPersona(this.persona).then(res => this.persona.id = res.id);
+            this.personService.postPersona(this.persona).then(res => {
+                personas.push(res);
+            });
             
-            personas.push(this.persona);
+            
         }
         
         this.personas = personas;
