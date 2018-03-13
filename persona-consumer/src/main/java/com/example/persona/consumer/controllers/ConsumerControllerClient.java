@@ -1,7 +1,10 @@
-package com.example.persona.consumer.controllers.service;
+package com.example.persona.consumer.controllers;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -36,7 +39,7 @@ public class ConsumerControllerClient {
 	@RequestMapping(value = CONSULTAR_PERSONAS, method = RequestMethod.GET, produces = APPLICATION_JSON)
 	public String consultarPersonas() throws RestClientException, IOException {
 
-		String baseUrl = obtenerUrlExplicita();
+		String baseUrl = obtenerUrlRegistradaEurekaBalanceado();
 		baseUrl += "/" + PERSONA + "/" + CONSULTAR_PERSONAS;
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = null;
@@ -51,7 +54,7 @@ public class ConsumerControllerClient {
 	@CrossOrigin(origins = HTTP_LOCALHOST_4200)
 	@RequestMapping(value = GUARDAR_PERSONA, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
 	public PersonaResponse guardarPersona(@RequestBody PersonaRequest guardadoPersonaRequest) {
-		String baseUrl = obtenerUrlExplicita();
+		String baseUrl = obtenerUrlRegistradaEurekaBalanceado();
 		baseUrl += "/" + PERSONA + "/" + GUARDAR_PERSONA;
 		RestTemplate restTemplate = new RestTemplate();
 		PersonaResponse personaResponse = null;
@@ -66,7 +69,7 @@ public class ConsumerControllerClient {
 	@CrossOrigin(origins = HTTP_LOCALHOST_4200)
 	@RequestMapping(value = ACTUALIZAR_PERSONA, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
 	public PersonaResponse actualizarPersona(@RequestBody PersonaRequest actualizarPersonaRequest) {
-		String baseUrl = obtenerUrlExplicita();
+		String baseUrl = obtenerUrlRegistradaEurekaBalanceado();
 		baseUrl += "/" + PERSONA + "/" + ACTUALIZAR_PERSONA;
 		RestTemplate restTemplate = new RestTemplate();
 		PersonaResponse personaResponse = null;
@@ -81,7 +84,7 @@ public class ConsumerControllerClient {
 	@CrossOrigin(origins = HTTP_LOCALHOST_4200)
 	@RequestMapping(value = ELIMINAR_PERSONA, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
 	public PersonaResponse eliminarPersona(@RequestBody PersonaRequest eliminarPersonaRequest) {
-		String baseUrl = obtenerUrlExplicita();
+		String baseUrl = obtenerUrlRegistradaEurekaBalanceado();
 		baseUrl += "/" + PERSONA + "/" + ELIMINAR_PERSONA;
 		RestTemplate restTemplate = new RestTemplate();
 		PersonaResponse personaResponse = null;
@@ -93,13 +96,13 @@ public class ConsumerControllerClient {
 		return personaResponse;
 	}
 
-	/*
-	 * METODO PARA OBTENER URL DIRECTA
-	 */
-	public String obtenerUrlExplicita() {
-		String baseUrl = "http://localhost:8080";
-		return baseUrl;
-	}
+	// /*
+	// * METODO PARA OBTENER URL DIRECTA
+	// */
+	// public String obtenerUrlExplicita() {
+	// String baseUrl = "http://localhost:8080";
+	// return baseUrl;
+	// }
 
 	// /*
 	// * METODO PARA OBTENER MICROSERVICIO REGISTRADO
@@ -115,19 +118,18 @@ public class ConsumerControllerClient {
 	// return baseUrl;
 	// }
 	//
-	// /*
-	// * METODO PARA OBTENER MICROSERVICIO BALANCEADO
-	// */
-	// @Autowired
-	// private LoadBalancerClient loadBalancer;
-	//
-	// public String obtenerUrlRegistradaEurekaBalanceado() {
-	// ServiceInstance serviceInstance =
-	// loadBalancer.choose("persona-producer");
-	// System.out.println(serviceInstance.getUri());
-	// String baseUrl = serviceInstance.getUri().toString();
-	// return baseUrl;
-	// }
+	/*
+	 * METODO PARA OBTENER MICROSERVICIO BALANCEADO
+	 */
+	@Autowired
+	private LoadBalancerClient loadBalancer;
+
+	public String obtenerUrlRegistradaEurekaBalanceado() {
+		ServiceInstance serviceInstance = loadBalancer.choose("persona-producer");
+		System.out.println("Petición atendida por persona-producer: " + serviceInstance.getUri());
+		String baseUrl = serviceInstance.getUri().toString();
+		return baseUrl;
+	}
 
 	private static HttpEntity<?> getHeaders() throws IOException {
 		HttpHeaders headers = new HttpHeaders();
