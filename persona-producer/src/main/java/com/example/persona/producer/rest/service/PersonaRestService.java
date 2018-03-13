@@ -23,10 +23,12 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 @RequestMapping(value = PersonProducerUrl.PERSONA)
 public class PersonaRestService {
 
+	private static final String HTTP_LOCALHOST_4200 = "http://localhost:4200";
+	
 	@Autowired
 	private PersonRepository personRepository;
 
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonProducerUrl.CONSULTAR_PERSONAS, method = RequestMethod.GET, produces = TypeConsumerProducer.APPLICATION_JSON)
 	@HystrixCommand(fallbackMethod = "consultarPersonasFB")
 	public PersonConsult consultarPersonas() {
@@ -51,7 +53,7 @@ public class PersonaRestService {
 		return personConsult;
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonProducerUrl.GUARDAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerProducer.APPLICATION_JSON, produces = TypeConsumerProducer.APPLICATION_JSON)
 	@HystrixCommand(fallbackMethod = "guardarPersonaFB")
 	public PersonaResponse guardarPersona(@RequestBody PersonaRequest guardadoPersonaRequest) {
@@ -87,6 +89,7 @@ public class PersonaRestService {
 		return guardadoPersonaResponse;
 	}
 
+	@CrossOrigin(origins = HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonProducerUrl.ACTUALIZAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerProducer.APPLICATION_JSON, produces = TypeConsumerProducer.APPLICATION_JSON)
 	@HystrixCommand(fallbackMethod = "actualizarPersonaFB")
 	public PersonaResponse actualizarPersona(@RequestBody PersonaRequest actualizarPersonaRequest) {
@@ -97,6 +100,11 @@ public class PersonaRestService {
 			person.setName(actualizarPersonaRequest.getName());
 			personRepository.save(person);
 
+			PersonaRequest personaRequest = new PersonaRequest();
+			personaRequest.setId(person.getId());
+			personaRequest.setName(person.getName());
+			
+			guardadoPersonaResponse.setPersonaRequest(personaRequest);
 			guardadoPersonaResponse.setTransaccionExitosa(true);
 			guardadoPersonaResponse.setMessage("Actualizado exitoso");
 
@@ -117,6 +125,7 @@ public class PersonaRestService {
 		return guardadoPersonaResponse;
 	}
 
+	@CrossOrigin(origins = HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonProducerUrl.ELIMINAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerProducer.APPLICATION_JSON, produces = TypeConsumerProducer.APPLICATION_JSON)
 	@HystrixCommand(fallbackMethod = "eliminarPersonaFB")
 	public PersonaResponse eliminarPersona(@RequestBody PersonaRequest eliminarPersonaRequest) {

@@ -7,6 +7,7 @@ import { InputTextModule }  from 'primeng/inputtext';
 import { ButtonModule }  from 'primeng/button';
 import { TableModule }  from 'primeng/table';
 import { DialogModule }  from 'primeng/dialog';
+import { GrowlModule } from 'primeng/growl';
 
 import { AppComponent } from './app.component';
 
@@ -22,7 +23,8 @@ import { AppComponent } from './app.component';
         HttpClientModule,
         InputTextModule,
         DialogModule,
-        ButtonModule
+        ButtonModule, 
+        GrowlModule
     ],
     providers: [],
     bootstrap: [AppComponent]

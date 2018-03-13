@@ -1,6 +1,6 @@
 package com.example.persona.producer.rest;
 
-public class PersonProducerUrl {
+public class PersonProducerUrl extends ElementosRest {
 
 	public static final String PERSONA = "PERSONA";
 	public static final String CONSULTAR_PERSONAS = "CONSULTAR_PERSONAS";

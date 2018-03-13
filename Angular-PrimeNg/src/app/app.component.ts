@@ -1,47 +1,36 @@
 import {Component, OnInit} from '@angular/core';
-import { Car } from './domain/car';
 import { Person } from './domain/person';
-import { CarService} from './services/carservice';
 import { PersonService} from './services/personservice';
+import { Message } from 'primeng/components/common/api';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    providers: [CarService, PersonService]
+    providers: [PersonService, MessageService]
 })
 export class AppComponent implements OnInit {
 
-    displayDialog: boolean;
     mostrarDialogoPerson: boolean;
-    disableId: boolean;
 
-    car: Car = new PrimeCar();
     persona: Persona = new Persona();
 
-    selectedCar: Car;
+    personaSeleccionada: Persona;
 
-    newCar: boolean;
     newPerson: boolean;
 
-    cars: Car[];
     personas: Person[];
 
-    cols: any[];
     columnasPersonas: any[];
+    
+    msgs: Message[] = [];
 
-    constructor(private carService: CarService, private personService: PersonService) { }
+    constructor(private personService: PersonService, private messageService: MessageService) { }
 
     ngOnInit() {
-        this.carService.getCarsSmall().then(cars => this.cars = cars);
-        this.personService.getPersons().then(personas => this.personas = personas);
-
-        this.cols = [
-            { field: 'vin', header: 'Vin' },
-            { field: 'year', header: 'Year' },
-            { field: 'brand', header: 'Brand' },
-            { field: 'color', header: 'Color' }
-        ];
+        
+        this.personService.consultarPersonas().then(personas => this.personas = personas);
 
         this.columnasPersonas = [
             { field: 'id', header: 'ID' },
@@ -49,16 +38,15 @@ export class AppComponent implements OnInit {
         ];
     }
 
-    showDialogToAdd() {
-        this.newCar = true;
-        this.car = new PrimeCar();
-        this.displayDialog = true;
-    }
-
     mostrarDialogoCrearPersona() {
         this.newPerson = true;
-        this.disableId = true;
         this.persona = new Persona();
+        this.mostrarDialogoPerson = true;
+    }
+        
+    mostrarDialogoActualizarPersona(event) {
+        this.newPerson = false;
+        this.persona = this.clonarPersona(event.data);
         this.mostrarDialogoPerson = true;
     }
 
@@ -67,63 +55,71 @@ export class AppComponent implements OnInit {
         const personas = [...this.personas];
         if (this.newPerson) {
             
-            this.personService.postPersona(this.persona).then(res => {
-                personas.push(res);
+            this.personService.guardarPersona(this.persona).then(res => {
+                //Petición Sincrona esperando respuesta para agregar la persona a la lista
+                this.msgs = [];
+                
+                
+                if(res.transaccionExitosa){
+                    this.msgs.push({severity:'success', summary:'Respuesta', detail:res.message});
+                    personas.push(res.personaRequest);
+                } else {
+                    this.msgs.push({severity:'success', summary:'Respuesta', detail:res.message});    
+                }
             });
             
-            
+        } else {
+                
+            this.personService.actualizarPersona(this.persona).then(res => {
+                //Petición Sincrona esperando respuesta para agregar la persona a la lista
+                
+                this.msgs = [];
+                if(res.transaccionExitosa){
+                    this.msgs.push({severity:'success', summary:'Respuesta', detail:res.message});
+                    personas[this.encontrarPersonaSeleccionadaIndex()] = res.personaRequest;
+                } else {
+                    this.msgs.push({severity:'error', summary:'Respuesta', detail:res.message});    
+                }
+            });
         }
         
+        //Código asincrono, no espera respuesta de la petición para ejecutarse
         this.personas = personas;
         this.persona = null;
         this.mostrarDialogoPerson = false;
         
     }
 
-    save() {
-        const cars = [...this.cars];
-        if (this.newCar) {
-            cars.push(this.car);
-        } else {
-            cars[this.findSelectedCarIndex()] = this.car;
+    eliminarPersona() {
+        this.personService.eliminarPersona(this.persona).then(res => {
+            //Petición Sincrona esperando respuesta para agregar la persona a la lista
+            this.msgs = [];
+            if(res.transaccionExitosa){
+                const index = this.encontrarPersonaSeleccionadaIndex();
+                this.personas = this.personas.filter((val, i) => i != index);
+                this.persona = null;
+                this.mostrarDialogoPerson = false;
+                this.msgs.push({severity:'success', summary:'Respuesta', detail:res.message});
+             } else {
+                this.msgs.push({severity:'error', summary:'Respuesta', detail:res.message});    
+             }
+        });
+    }
+        
+    clonarPersona(p: Person): Person {
+        const person = new Persona();
+        for (const propiedad in p) {
+            person[propiedad] = p[propiedad];
         }
-        this.cars = cars;
-        this.car = null;
-        this.displayDialog = false;
+        return person;
     }
-
-    delete() {
-        const index = this.findSelectedCarIndex();
-        this.cars = this.cars.filter((val, i) => i != index);
-        this.car = null;
-        this.displayDialog = false;
-    }
-
-    onRowSelect(event) {
-        this.newCar = false;
-        this.car = this.cloneCar(event.data);
-        this.displayDialog = true;
-    }
-
-    cloneCar(c: Car): Car {
-        const car = new PrimeCar();
-        for (const prop in c) {
-            car[prop] = c[prop];
-        }
-        return car;
-    }
-
-    findSelectedCarIndex(): number {
-        return this.cars.indexOf(this.selectedCar);
+        
+    encontrarPersonaSeleccionadaIndex(): number {
+        return this.personas.indexOf(this.personaSeleccionada);
     }
 }
 
 export class Persona implements Person {
 
     constructor(public id?, public name?) { }
-}
-
-export class PrimeCar implements Car {
-
-    constructor(public vin?, public year?, public brand?, public color?) { }
 }

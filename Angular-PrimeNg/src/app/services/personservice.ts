@@ -9,14 +9,14 @@ export class PersonService {
 
     constructor(private http: HttpClient) { }
 
-    getPersons() {
+    consultarPersonas() {
         return this.http.get<any>('http://localhost:8080/PERSONA/CONSULTAR_PERSONAS')
             .toPromise()
             .then(res => <Person[]> res.lPersons)
             .then(data => data);
     }
 
-    postPersona(persona : Persona) {
+    guardarPersona(persona : Persona) {
         
         const httpOptions = {
           headers: new HttpHeaders({
@@ -28,7 +28,39 @@ export class PersonService {
     
         return this.http.post<any>('http://localhost:8080/PERSONA/GUARDAR_PERSONA',persona , httpOptions)
             .toPromise()
-            .then(res => <Person> res.personaRequest)
+            .then(res => <any> res)
+            .then(data => data);
+    }
+    
+    actualizarPersona(persona : Persona) {
+        
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json'
+            //,'Authorization': 'my-auth-token'
+          })
+        };
+    
+        return this.http.post<any>('http://localhost:8080/PERSONA/ACTUALIZAR_PERSONA',persona , httpOptions)
+            .toPromise()
+            .then(res => <any> res)
+            .then(data => data);
+    }
+    
+    eliminarPersona(persona : Persona) {
+        
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Accept':  'application/json'
+            //,'Authorization': 'my-auth-token'
+          })
+        };
+    
+        return this.http.post<any>('http://localhost:8080/PERSONA/ELIMINAR_PERSONA',persona , httpOptions)
+            .toPromise()
+            .then(res => <any> res)
             .then(data => data);
     }
 
