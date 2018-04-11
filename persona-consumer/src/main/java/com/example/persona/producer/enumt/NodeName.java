@@ -1,9 +1,9 @@
-package com.example.persona.producer.dto;
+package com.example.persona.producer.enumt;
 
 public enum NodeName {
 
 	PERSONA_PRODUCER("persona-producer"),
-	PERSONA_ZUUL_SERVICE("persona-zuul-service");
+	PERSONA_ZUUL_SERVICE("persona-zuul-gateway");
 
 	private String nodeName;
 

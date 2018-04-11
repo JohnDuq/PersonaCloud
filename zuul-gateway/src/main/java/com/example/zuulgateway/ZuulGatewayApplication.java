@@ -12,8 +12,8 @@ import com.example.zuulgateway.filter.PreFilter;
 import com.example.zuulgateway.filter.RouteFilter;
 
 @SpringBootApplication
-@EnableZuulProxy
 @EnableDiscoveryClient
+@EnableZuulProxy
 public class ZuulGatewayApplication {
 
 	public static void main(String[] args) {

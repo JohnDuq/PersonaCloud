@@ -20,9 +20,9 @@ import com.example.persona.consumer.factory.NodeFactory;
 import com.example.persona.consumer.rest.OriginValid;
 import com.example.persona.consumer.rest.PersonConsumerUrl;
 import com.example.persona.consumer.rest.TypeConsumerConsumer;
-import com.example.persona.producer.dto.NodeName;
 import com.example.persona.producer.dto.PersonaRequest;
 import com.example.persona.producer.dto.PersonaResponse;
+import com.example.persona.producer.enumt.NodeName;
 
 @RestController
 public class ConsumerControllerClient {
@@ -35,7 +35,7 @@ public class ConsumerControllerClient {
 	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonConsumerUrl.CONSULTAR_PERSONAS, method = RequestMethod.GET, produces = TypeConsumerConsumer.APPLICATION_JSON)
 	public String consultarPersonas() throws RestClientException, IOException {
-		String baseUrl = nodeFactory.obtenerNodeRegistradaEureka(NodeName.PERSONA_PRODUCER.getNodeName());
+		String baseUrl = nodeFactory.obtenerNodeRegistradaEureka(NodeName.PERSONA_ZUUL_SERVICE.getNodeName());
 		baseUrl += "/" + PERSONA + "/" + PersonConsumerUrl.CONSULTAR_PERSONAS;
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = null;
