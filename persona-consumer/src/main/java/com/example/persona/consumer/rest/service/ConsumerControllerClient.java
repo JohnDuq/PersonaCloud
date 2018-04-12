@@ -36,7 +36,7 @@ public class ConsumerControllerClient {
 	@RequestMapping(value = PersonConsumerUrl.CONSULTAR_PERSONAS, method = RequestMethod.GET, produces = TypeConsumerConsumer.APPLICATION_JSON)
 	public String consultarPersonas() throws RestClientException, IOException {
 		String baseUrl = nodeFactory.obtenerNodeRegistradaEureka(NodeName.PERSONA_PRODUCER.getNodeName());
-		baseUrl += "/" + PERSONA + "/" + PersonConsumerUrl.CONSULTAR_PERSONAS;
+		baseUrl += "/producer/" + PERSONA + "/" + PersonConsumerUrl.CONSULTAR_PERSONAS;
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = null;
 		try {
