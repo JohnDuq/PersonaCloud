@@ -10,7 +10,7 @@ export class PersonService {
     constructor(private http: HttpClient) { }
 
     consultarPersonas() {
-        return this.http.get<any>('http://localhost:8085/CONSULTAR_PERSONAS')
+        return this.http.get<any>('http://localhost:8080/proxy/CONSULTAR_PERSONAS')
             .toPromise()
             .then(res => <Person[]> res.lPersons)
             .then(data => data);
@@ -26,7 +26,7 @@ export class PersonService {
           })
         };
     
-        return this.http.post<any>('http://localhost:8085/GUARDAR_PERSONA',persona , httpOptions)
+        return this.http.post<any>('http://localhost:8080/proxy/GUARDAR_PERSONA',persona , httpOptions)
             .toPromise()
             .then(res => <any> res)
             .then(data => data);
@@ -42,7 +42,7 @@ export class PersonService {
           })
         };
     
-        return this.http.post<any>('http://localhost:8085/ACTUALIZAR_PERSONA',persona , httpOptions)
+        return this.http.post<any>('http://localhost:8080/proxy/ACTUALIZAR_PERSONA',persona , httpOptions)
             .toPromise()
             .then(res => <any> res)
             .then(data => data);
@@ -58,7 +58,7 @@ export class PersonService {
           })
         };
     
-        return this.http.post<any>('http://localhost:8085/ELIMINAR_PERSONA',persona , httpOptions)
+        return this.http.post<any>('http://localhost:8080/proxy/ELIMINAR_PERSONA',persona , httpOptions)
             .toPromise()
             .then(res => <any> res)
             .then(data => data);
