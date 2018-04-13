@@ -30,7 +30,7 @@ public class ConsumerControllerClient {
 	@Autowired
 	private HeaderFactory headerFactory;
 
-	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_8080)
+	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonConsumerUrl.CONSULTAR_PERSONAS, method = RequestMethod.GET, produces = TypeConsumerConsumer.APPLICATION_JSON)
 	public String consultarPersonas() throws RestClientException, IOException {
 		String baseUrl = nodeFactory.obtenerNodeRegistradaEureka(NodeName.PERSONA_PRODUCER.getNodeName());
@@ -45,7 +45,7 @@ public class ConsumerControllerClient {
 		return response.getBody();
 	}
 
-	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_8080)
+	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonConsumerUrl.GUARDAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerConsumer.APPLICATION_JSON, produces = TypeConsumerConsumer.APPLICATION_JSON)
 	public PersonaResponse guardarPersona(@RequestBody PersonaRequest guardadoPersonaRequest) {
 		String baseUrl = nodeFactory.obtenerNodeRegistradaEureka(NodeName.PERSONA_PRODUCER.getNodeName());
@@ -60,7 +60,7 @@ public class ConsumerControllerClient {
 		return personaResponse;
 	}
 
-	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_8080)
+	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonConsumerUrl.ACTUALIZAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerConsumer.APPLICATION_JSON, produces = TypeConsumerConsumer.APPLICATION_JSON)
 	public PersonaResponse actualizarPersona(@RequestBody PersonaRequest actualizarPersonaRequest) {
 		String baseUrl = nodeFactory.obtenerNodeRegistradaEureka(NodeName.PERSONA_PRODUCER.getNodeName());
@@ -75,7 +75,7 @@ public class ConsumerControllerClient {
 		return personaResponse;
 	}
 
-	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_8080)
+	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonConsumerUrl.ELIMINAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerConsumer.APPLICATION_JSON, produces = TypeConsumerConsumer.APPLICATION_JSON)
 	public PersonaResponse eliminarPersona(@RequestBody PersonaRequest eliminarPersonaRequest) {
 		String baseUrl = nodeFactory.obtenerNodeRegistradaEureka(NodeName.PERSONA_PRODUCER.getNodeName());
