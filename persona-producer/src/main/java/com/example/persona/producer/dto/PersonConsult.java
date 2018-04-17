@@ -5,10 +5,15 @@ import java.util.List;
 import com.example.persona.producer.entity.Person;
 import com.example.persona.producer.util.PageableConstructor;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class PersonConsult {
 
-	PageableConstructor pageableConstructor;
-	List<Person> lPersons;
+	private PageableConstructor pageableConstructor;
+	private List<Person> lPersons;
 
 	public List<Person> getlPersons() {
 		return lPersons;
@@ -16,14 +21,6 @@ public class PersonConsult {
 
 	public void setlPersons(List<Person> lPersons) {
 		this.lPersons = lPersons;
-	}
-
-	public PageableConstructor getPageableConstructor() {
-		return pageableConstructor;
-	}
-
-	public void setPageableConstructor(PageableConstructor pageableConstructor) {
-		this.pageableConstructor = pageableConstructor;
 	}
 
 }
