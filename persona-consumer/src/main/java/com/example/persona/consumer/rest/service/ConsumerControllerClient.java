@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,7 @@ public class ConsumerControllerClient {
 			response = restTemplate.exchange(baseUrl, HttpMethod.GET, headerFactory.getHeaders(), String.class);
 		} catch (Exception ex) {
 			System.out.println(ex);
+			response = new ResponseEntity<>("Error de consulta", HttpStatus.CONFLICT);
 		}
 		return response.getBody();
 	}
