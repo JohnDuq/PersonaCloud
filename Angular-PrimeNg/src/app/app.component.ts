@@ -56,9 +56,8 @@ export class AppComponent implements OnInit {
         if (this.newPerson) {
             
             this.personService.guardarPersona(this.persona).then(res => {
-                //Petición Sincrona esperando respuesta para agregar la persona a la lista
+                //Peticiï¿½n Sincrona esperando respuesta para agregar la persona a la lista
                 this.msgs = [];
-                
                 
                 if(res.transaccionExitosa){
                     this.msgs.push({severity:'success', summary:'Respuesta', detail:res.message});
@@ -71,7 +70,7 @@ export class AppComponent implements OnInit {
         } else {
                 
             this.personService.actualizarPersona(this.persona).then(res => {
-                //Petición Sincrona esperando respuesta para agregar la persona a la lista
+                //Peticiï¿½n Sincrona esperando respuesta para agregar la persona a la lista
                 
                 this.msgs = [];
                 if(res.transaccionExitosa){
@@ -83,7 +82,7 @@ export class AppComponent implements OnInit {
             });
         }
         
-        //Código asincrono, no espera respuesta de la petición para ejecutarse
+        //Cï¿½digo asincrono, no espera respuesta de la peticiï¿½n para ejecutarse
         this.personas = personas;
         this.persona = null;
         this.mostrarDialogoPerson = false;
@@ -92,7 +91,7 @@ export class AppComponent implements OnInit {
 
     eliminarPersona() {
         this.personService.eliminarPersona(this.persona).then(res => {
-            //Petición Sincrona esperando respuesta para agregar la persona a la lista
+            //Peticiï¿½n Sincrona esperando respuesta para agregar la persona a la lista
             this.msgs = [];
             if(res.transaccionExitosa){
                 const index = this.encontrarPersonaSeleccionadaIndex();
