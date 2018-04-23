@@ -1,32 +1,35 @@
 <p-growl [(value)]="msgs"></p-growl>
-<p-table [columns]="columnasPersonas" [value]="personas" [paginator]="true" [rows]="10" selectionMode="single" [(selection)]="personaSeleccionada"
-    (onRowSelect)="mostrarDialogoActualizarPersona($event)">
-    <ng-template pTemplate="header" let-columns>
-        <tr>
-            <th colspan="2">Ejemplo JDuqueR Angular</th>
-        </tr>
-        <tr>
-            <th colspan="2">CRUD Personas</th>
-        </tr>
-        <tr>
-            <th *ngFor="let col of columns">
-                {{col.header}}
-            </th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr>
-            <td *ngFor="let col of columns" [pSelectableRow]="rowData">
-                {{rowData[col.field]}}
-            </td>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="summary" let-rowData>
-        <div style="text-align:left">
-            <button type="button" pButton icon="fa-plus" (click)="mostrarDialogoCrearPersona()" label="Crear Persona"></button>
-        </div>
-    </ng-template>
-</p-table>
+<div class="container">
+    <p-table [columns]="columnasPersonas" [value]="personas" [paginator]="true" 
+        [rows]="10" selectionMode="single" [(selection)]="personaSeleccionada"
+        (onRowSelect)="mostrarDialogoActualizarPersona($event)">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th colspan="2" class="text-center">Ejemplo JDuqueR Angular</th>
+            </tr>
+            <tr>
+                <th colspan="2" class="text-center">CRUD Personas</th>
+            </tr>
+            <tr>
+                <th *ngFor="let col of columns" class="text-center">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns" [pSelectableRow]="rowData">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+            <div style="text-align:left">
+                <button type="button" pButton icon="fa-plus" (click)="mostrarDialogoCrearPersona()" label="Crear Persona"></button>
+            </div>
+        </ng-template>
+    </p-table>
+</div>
 
 <p-dialog header="Persona" [(visible)]="mostrarDialogoPerson" [responsive]="true" showEffect="fade" [modal]="true" [closable]="true"
     [width]="300">
