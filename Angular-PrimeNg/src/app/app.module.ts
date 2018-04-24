@@ -3,12 +3,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { InputTextModule }  from 'primeng/inputtext';
-import { ButtonModule }  from 'primeng/button';
-import { TableModule }  from 'primeng/table';
-import { DialogModule }  from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
 import { GrowlModule } from 'primeng/growl';
-
+import { BlockUIModule } from 'primeng/blockui';
+import { ProgressBarModule } from 'primeng/progressbar';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -24,7 +25,9 @@ import { AppComponent } from './app.component';
         InputTextModule,
         DialogModule,
         ButtonModule, 
-        GrowlModule
+        GrowlModule,
+        BlockUIModule,
+        ProgressBarModule
     ],
     providers: [],
     bootstrap: [AppComponent]

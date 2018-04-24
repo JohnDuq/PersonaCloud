@@ -23,8 +23,12 @@ public class NodeImp implements NodeFactory {
 		String baseUrl = "http://localhost:8080";
 		return baseUrl;
 	}
-
+	
 	@Override
+	public String obtenerNodeInirecto(String instanceNodeName) {
+		return obtenerNodeRegistradaEureka(instanceNodeName);
+	}
+
 	public String obtenerNodeRegistradaEureka(String instanceNodeName) {
 		List<ServiceInstance> instances = discoveryClient.getInstances(instanceNodeName);
 		ServiceInstance serviceInstance = instances.get(0);
@@ -32,7 +36,6 @@ public class NodeImp implements NodeFactory {
 		return baseUrl;
 	}
 
-	@Override
 	public String obtenerNodeBalanceadoRibbonEureka(String instanceNodeName) {
 		ServiceInstance serviceInstance = loadBalancer.choose(instanceNodeName);
 		System.out.println("Petición atendida por " + instanceNodeName + ": " + serviceInstance.getUri());

@@ -34,7 +34,7 @@ public class ConsumerControllerClient {
 	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonConsumerUrl.CONSULTAR_PERSONAS, method = RequestMethod.GET, produces = TypeConsumerConsumer.APPLICATION_JSON)
 	public String consultarPersonas() throws RestClientException, IOException {
-		String baseUrl = nodeFactory.obtenerNodeRegistradaEureka(NodeName.PERSONA_PRODUCER.getNodeName());
+		String baseUrl = nodeFactory.obtenerNodeInirecto(NodeName.PERSONA_PRODUCER.getNodeName());
 		baseUrl +=  "/" + NodeName.PERSONA_PRODUCER.getNodePrefix() + "/" + PersonConsumerUrl.CONSULTAR_PERSONAS;
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = null;
@@ -50,7 +50,7 @@ public class ConsumerControllerClient {
 	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonConsumerUrl.GUARDAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerConsumer.APPLICATION_JSON, produces = TypeConsumerConsumer.APPLICATION_JSON)
 	public PersonaResponse guardarPersona(@RequestBody PersonaRequest guardadoPersonaRequest) {
-		String baseUrl = nodeFactory.obtenerNodeRegistradaEureka(NodeName.PERSONA_PRODUCER.getNodeName());
+		String baseUrl = nodeFactory.obtenerNodeInirecto(NodeName.PERSONA_PRODUCER.getNodeName());
 		baseUrl += "/" + NodeName.PERSONA_PRODUCER.getNodePrefix() + "/" + PersonConsumerUrl.GUARDAR_PERSONA;
 		RestTemplate restTemplate = new RestTemplate();
 		PersonaResponse personaResponse = null;
@@ -65,7 +65,7 @@ public class ConsumerControllerClient {
 	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonConsumerUrl.ACTUALIZAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerConsumer.APPLICATION_JSON, produces = TypeConsumerConsumer.APPLICATION_JSON)
 	public PersonaResponse actualizarPersona(@RequestBody PersonaRequest actualizarPersonaRequest) {
-		String baseUrl = nodeFactory.obtenerNodeRegistradaEureka(NodeName.PERSONA_PRODUCER.getNodeName());
+		String baseUrl = nodeFactory.obtenerNodeInirecto(NodeName.PERSONA_PRODUCER.getNodeName());
 		baseUrl += "/" + NodeName.PERSONA_PRODUCER.getNodePrefix() + "/" + PersonConsumerUrl.ACTUALIZAR_PERSONA;
 		RestTemplate restTemplate = new RestTemplate();
 		PersonaResponse personaResponse = null;
@@ -80,7 +80,7 @@ public class ConsumerControllerClient {
 	@CrossOrigin(origins = OriginValid.HTTP_LOCALHOST_4200)
 	@RequestMapping(value = PersonConsumerUrl.ELIMINAR_PERSONA, method = RequestMethod.POST, consumes = TypeConsumerConsumer.APPLICATION_JSON, produces = TypeConsumerConsumer.APPLICATION_JSON)
 	public PersonaResponse eliminarPersona(@RequestBody PersonaRequest eliminarPersonaRequest) {
-		String baseUrl = nodeFactory.obtenerNodeRegistradaEureka(NodeName.PERSONA_PRODUCER.getNodeName());
+		String baseUrl = nodeFactory.obtenerNodeInirecto(NodeName.PERSONA_PRODUCER.getNodeName());
 		baseUrl += "/" + NodeName.PERSONA_PRODUCER.getNodePrefix() + "/" + PersonConsumerUrl.ELIMINAR_PERSONA;
 		RestTemplate restTemplate = new RestTemplate();
 		PersonaResponse personaResponse = null;

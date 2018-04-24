@@ -1,4 +1,8 @@
-<p-growl [(value)]="msgs"></p-growl>
+<div *ngIf="barraProgreso">
+    <p-progressBar mode="indeterminate"></p-progressBar>
+</div>
+<p-blockUI [blocked]="pantallaBloqueada"></p-blockUI>
+<p-growl [(value)]="msgs" [sticky]="msgsErrorConB"></p-growl>
 <div class="container">
     <p-table [columns]="columnasPersonas" [value]="personas" [paginator]="true" 
         [rows]="10" selectionMode="single" [(selection)]="personaSeleccionada"
@@ -17,8 +21,8 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns" [pSelectableRow]="rowData">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
                     {{rowData[col.field]}}
                 </td>
             </tr>
