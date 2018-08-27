@@ -26,7 +26,7 @@ public class NodeImp implements NodeFactory {
 	
 	@Override
 	public String obtenerNodeInirecto(String instanceNodeName) {
-		return obtenerNodeRegistradaEureka(instanceNodeName);
+		return obtenerNodeBalanceadoRibbonEureka(instanceNodeName);
 	}
 
 	public String obtenerNodeRegistradaEureka(String instanceNodeName) {
