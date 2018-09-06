@@ -77,7 +77,19 @@
 			<version>1.16.20</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 
+		<!-- Dependencias monitoreo Spring Boot -->
+		<!-- <dependency> -->
+		<!-- <groupId>de.codecentric</groupId> -->
+		<!-- <artifactId>spring-boot-admin-starter-client</artifactId> -->
+		<!-- <version>1.5.1</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.boot</groupId> -->
+		<!-- <artifactId>spring-boot-starter-actuator</artifactId> -->
+		<!-- </dependency> -->
+		<!-- Dependencias monitoreo Spring Boot -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
