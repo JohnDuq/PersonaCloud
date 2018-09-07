@@ -2,7 +2,7 @@ package com.example.persona.producer.enumt;
 
 public enum NodeName {
 
-	PERSONA_PRODUCER("persona-producer", "PERSONA");
+	PERSONA_PRODUCER("business-logic-node", "PERSONA");
 
 	private String nodeName;
 	private String nodePrefix;

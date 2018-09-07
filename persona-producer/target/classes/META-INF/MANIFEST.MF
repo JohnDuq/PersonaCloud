@@ -4,8 +4,8 @@ Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: Jduquer
 Implementation-Vendor-Id: com.example
 Build-Jdk: 1.8.0_51
-Implementation-URL: http://projects.spring.io/spring-boot/persona-prod
- ucer/
+Implementation-URL: http://projects.spring.io/spring-boot/business-log
+ ic-node/
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.
 
