@@ -2,8 +2,6 @@ package com.example.zuulgateway.filter;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpStatus;
-
 import com.example.zuulgateway.util.HttpServletUtil;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -43,17 +41,17 @@ public class PostFilter extends ZuulFilter {
 		System.out.println(String.format("%s petición a %s", request.getMethod(), request.getRequestURL().toString()));
 		System.out.println("-----------------------------------------------");
 		
-		//rechazarPeticion("ERROR", 400);
+		//rechazarPeticion(400, "ERROR");
 		
 		return null;
 	}
 	
 
-	private void rechazarPeticion(String body, int code) {
+	private void rechazarPeticion(int codigoEstado, String mensaje) {
 	    RequestContext ctx = RequestContext.getCurrentContext();
-	    ctx.setResponseStatusCode(code);
+	    ctx.setResponseStatusCode(codigoEstado);
 	    if (ctx.getResponseBody() == null) {
-	        ctx.setResponseBody(body);
+	        ctx.setResponseBody(mensaje);
 	        ctx.setSendZuulResponse(false);
 	    }
 	}
