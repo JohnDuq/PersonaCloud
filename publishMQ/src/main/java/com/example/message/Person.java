@@ -16,7 +16,7 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Employee [empName=" + name + ", empId=" + id + "]";
+		return "Person [id=" + id + ", name=" + name + "]";
 	}
 	
 }
